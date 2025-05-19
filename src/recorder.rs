@@ -137,13 +137,6 @@ fn new_ffmpeg_command(image_dimensions: ImageDimensions, filename: &str) -> Resu
         .stdout(Stdio::inherit())
         .stderr(Stdio::inherit());
 
-    #[cfg(windows)]
-    {
-        const WINAPI_UM_WINBASE_CREATE_NO_WINDOW: u32 = 0x08000000;
-        // Not create terminal window
-        command.creation_flags(WINAPI_UM_WINBASE_CREATE_NO_WINDOW);
-    }
-
     let child = command.spawn()?;
 
     Ok(RecorderThread { process: child })
